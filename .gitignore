@@ -1,1 +1,11 @@
+*.class
+
+#eclipse ignorings
+.classpath
+.project
+.settings
+
+*.jar
+*.war
+*.ear
 /target/
