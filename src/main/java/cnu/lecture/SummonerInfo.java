@@ -13,9 +13,4 @@ public class SummonerInfo {
 
     @Getter @Setter
     private String name;
-
-	public String getId() {
-		
-		return null;
-	}
 }
