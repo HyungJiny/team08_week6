@@ -9,11 +9,16 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import org.apache.http.client.ClientProtocolException;
 /**
  * Created by tchi on 2016. 4. 25..
  */
 public class InGameSummonerQuerierTest {
     private InGameSummonerQuerier querier;
+    private InSummonersGameInfo inSummonersGameInfo;
     
     @Before
     public void setup() {
@@ -22,6 +27,15 @@ public class InGameSummonerQuerierTest {
         
         querier = new InGameSummonerQuerier(apiKey, dontCareListener);
         querier = mock(InGameSummonerQuerier.class);
+        
+        inSummonersGameInfo = new InSummonersGameInfo() {           
+            @Override
+            public InGameInfo getSummonersGameInfo(String summonerName)
+                    throws UnsupportedEncodingException, IOException, ClientProtocolException {
+                InGameInfo ingameInfo = mock(InGameInfo.class);
+                return ingameInfo;
+            }
+        };
     }
     @Test
     public void shouldQuerierIdentifyGameKeyWhenSpecificSummonerNameIsGiven() throws Exception {
@@ -46,12 +60,13 @@ public class InGameSummonerQuerierTest {
     public void shouldQuerierReportMoreThan5Summoners() throws Exception{
 
         final int expectedNumOfSummernors;
-        final InGameInfo ingameSummonerInfo;
+        final InGameInfo inGameInfo;
         final String summonerName;
         GIVEN: {
             summonerName ="akane24";    
             querier.queryGameKey(summonerName);     
             expectedNumOfSummernors=4;
+            inGameInfo=inSummonersGameInfo.getSummonersGameInfo(summonerName);
         }
 
         final int actualNumOfSummoners;
