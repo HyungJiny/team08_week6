@@ -71,8 +71,8 @@ public class InGameSummonerQuerierTest {
 
         final int actualNumOfSummoners;
         WHEN: {
-            when(querier.getParticipantNumber()).thenReturn(expectedNumOfSummernors);           
-            actualNumOfSummoners =querier.getParticipantNumber();
+            when(inGameInfo.participantNumber()).thenReturn(expectedNumOfSummernors);           
+            actualNumOfSummoners =inGameInfo.participantNumber();
         }
 
         THEN: {
