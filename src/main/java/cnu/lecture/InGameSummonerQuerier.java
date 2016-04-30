@@ -18,12 +18,16 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 
+import lombok.Getter;
+
 /**
  * Created by tchi on 2016. 4. 25..
  */
 public class InGameSummonerQuerier {
     private final String apiKey;
     private final GameParticipantListener listener;
+    @Getter    
+    private int participantNumber;
 
     public InGameSummonerQuerier(String apiKey, GameParticipantListener listener) {
         this.apiKey = apiKey;
@@ -44,6 +48,8 @@ public class InGameSummonerQuerier {
         HttpResponse inGameResponse = client.execute(inGameRequest);
         Gson inGameGson = new Gson();
         InGameInfo gameInfo = inGameGson.fromJson(new JsonReader(new InputStreamReader(inGameResponse.getEntity().getContent())), InGameInfo.class);
+       
+        participantNumber=gameInfo.getParticipants().length;
 
         Arrays.asList(gameInfo.getParticipants()).forEach((InGameInfo.Participant participant) -> {
             listener.player(participant.getSummonerName());

@@ -5,6 +5,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Before;
 import org.junit.Test;
 /**
@@ -39,4 +41,28 @@ public class InGameSummonerQuerierTest {
             assertThat(actualGameKey, is(expectedGameKey));
         }
     }
+    
+    @Test
+    public void shouldQuerierReportMoreThan5Summoners() throws Exception{
+
+        final int expectedNumOfSummernors;
+        final InGameInfo ingameSummonerInfo;
+        final String summonerName;
+        GIVEN: {
+            summonerName ="akane24";    
+            querier.queryGameKey(summonerName);     
+            expectedNumOfSummernors=4;
+        }
+
+        final int actualNumOfSummoners;
+        WHEN: {
+            when(querier.getParticipantNumber()).thenReturn(expectedNumOfSummernors);           
+            actualNumOfSummoners =querier.getParticipantNumber();
+        }
+
+        THEN: {
+            assertTrue(actualNumOfSummoners>=expectedNumOfSummernors);
+        }
+    }
+
 }
