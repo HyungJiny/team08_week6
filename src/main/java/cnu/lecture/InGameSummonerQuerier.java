@@ -16,11 +16,18 @@ public class InGameSummonerQuerier extends Querier {
     public String queryGameKey(String summonerName) throws IOException {
         InGameInfo gameInfo = getSummonersGameInfo(summonerName);
         
-        Arrays.asList(gameInfo.getParticipants()).forEach((InGameInfo.Participant participant) -> {
-            listener.player(participant.getSummonerName());
-        });
+        if(hasParticipant(gameInfo)){
+			Arrays.asList(gameInfo.getParticipants()).forEach((InGameInfo.Participant participant) -> {
+				listener.player(participant.getSummonerName());
+			});
+			return gameInfo.getObservers().getEncryptionKey();
+		}
+		return null;		
+	}
 
-        return gameInfo.getObservers().getEncryptionKey();
-    }
+	protected boolean hasParticipant(InGameInfo gameInfo) {
+		return gameInfo.getParticipants() !=null;
+	}
+
 
 }
