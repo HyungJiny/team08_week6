@@ -20,9 +20,13 @@ public class InGameSummonerQuerier extends Querier {
 			Arrays.asList(gameInfo.getParticipants()).forEach((InGameInfo.Participant participant) -> {
 				listener.player(participant.getSummonerName());
 			});
-			return gameInfo.getObservers().getEncryptionKey();
+			return getEncryptionKey(gameInfo);
 		}
 		return null;		
+	}
+
+	protected String getEncryptionKey(InGameInfo gameInfo) {
+		return gameInfo.getObservers().getEncryptionKey();
 	}
 
 	protected boolean hasParticipant(InGameInfo gameInfo) {
