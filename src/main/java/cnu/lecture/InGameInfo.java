@@ -25,4 +25,11 @@ public class InGameInfo {
 
     @Getter @Setter
     private Participant[] participants;
+       
+        public int participantNumber(){
+            if(participants == null){
+                return 0;
+            }
+            return participants.length;
+        }
 }
